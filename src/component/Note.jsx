@@ -86,14 +86,13 @@ class Note extends Component {
           <AnimateHeight height={this.state.height}>
             {/* style controls must be applied to a child container because style flex cannot be applied to AnimateHeight */}
             <div style={controls}>
-
               <Tooltip title={this.state.TooltipMessage}>
-                {/* A span is required because a disabled button doesnt send events */}
+                {/* a span is required because a disabled button doesnt send events to trigger the tooltip */}
                 <span>
                   <Button
                     variant="contained"
                     color="primary"
-                    // save button is disabled is note content length not longer than zero
+                    // save button is disabled if note content length not longer than zero
                     disabled={this.state.disabled}
                     onClick={this.saveNote}>
                     Save
