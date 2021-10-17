@@ -4,7 +4,12 @@ contextBridge.exposeInMainWorld('appContext', {
   sendPing: () => ipcRenderer.send('ping'),
   onPingReceive: (callback) => ipcRenderer.on('ping-reply', (event, arg) => callback(arg)),
   saveNote: (content) => { 
-    console.log("preloader")
-    ipcRenderer.send('saveNote', content)}
+    ipcRenderer.send('saveNote', content)
+  },
+
+  // I planned
+  fetchNotes: (content) => {
+    ipcRenderer.send("fetchNotes", content)
+  }
 });
  

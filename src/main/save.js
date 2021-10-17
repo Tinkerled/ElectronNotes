@@ -2,14 +2,10 @@ const { ipcRenderer, ipcMain, dialog, BrowserView } = require('electron')
 const fs = require('fs');
 
 ipcMain.on('saveNote', (e, content) => {
-    console.log(content)
-
-
     let filename = dialog.showSaveDialogSync({
-        title: "save file"
+        title: "Save file"
     })
 
-    console.log(filename)
     if (filename) {
         fs.writeFile(filename, content, (err) => {
             if (err)
@@ -22,3 +18,7 @@ ipcMain.on('saveNote', (e, content) => {
         })
     }
 })
+
+// ipcMain.on("fetchNotes", (e, content) => {
+//     console.log(content)
+// })
