@@ -11,74 +11,62 @@ class Note extends Component {
     disabled: true
   }
 
-  saveNote = (e) => {
-    console.log('click');
-    e.preventDefault();
-    window.appContext.saveNote(this.state.content);
+  componentDidUpdate(prevProps, prevState){
+    if(this.state.content !== prevState.content)
+      if (!this.state.content > 0)
+        this.setState({ disabled: true });
+      else 
+        this.setState({ disabled: false });
   }
 
   handleChange = (e) => {
     this.setState({ content: e.target.value })
     e.target.style.height = 'inherit';
     e.target.style.height = `${e.target.scrollHeight}px`;
-
   }
 
-  componentDidUpdate(prevProps, prevState){
-    if(this.state.content !== prevState.content){
-        
-      if (!this.state.content > 0){
-        this.setState({ disabled: true })
-      } else {
-        this.setState({ disabled: false })
-      }
-    }
-    
-  }
-
-  showControls = (e) => {
-    console.log(this.state)
-    this.setState({
-      height: "auto",
-    });
+  showControls = () => {
+    this.setState({  height: "auto" });
   }
 
   hideControls = () => {
     if (!this.state.content.length > 0)
-      this.setState({
-        height: 0,
-      });
+      this.setState({ height: 0 });
+  }
+
+  saveNote = (e) => {
+    e.preventDefault();
+    window.appContext.saveNote(this.state.content);
   }
 
   cancelNote = () => {
-    this.setState({
-      content: ''
-    })
-    this.hideControls()
+    this.setState({ content: '', height: 0 });
   }
 
   render() {
-    const notePad = {
-      padding: 10,
-    }
+    const notePad = { padding: 10 }
+
     const textFieldContainer = {
       position: "relative",
       width: "100%",
       maxWdith: "100%",
       minHeight: "40px"
     }
+
     const textField = {
       width: "100%",
       height: "auto",
       maxWdith: "100%",
       minHeight: "40px"
     }
+
     const controls = {
       width: "100%",
       paddingTop: 10,
       display: "flex",
       justifyContent: "space-between"
     }
+
     return (
       <div>
         <Paper
@@ -89,7 +77,6 @@ class Note extends Component {
             <TextField
               style={textField}
               id="standard-multiline-static"
-              // label="Type a note..."
               value={this.state.content}
               multiline
               placeholder="Take a note..."
@@ -99,17 +86,10 @@ class Note extends Component {
               onFocus={this.showControls}
               onBlur={this.hideControls}
             />
-
           </div>
 
-          <AnimateHeight
-
-            duration={500}
-            easing="ease"
-            height={this.state.height}
-          >
-            <div
-              style={controls}>
+          <AnimateHeight height={this.state.height}>
+            <div style={controls}>
               <Button
                 variant="contained"
                 color="primary"
@@ -117,16 +97,15 @@ class Note extends Component {
                 onClick={this.saveNote}>
                 Save
               </Button>
+
               <Button
                 onClick={this.cancelNote}>
                 Cancel
               </Button>
-
             </div>
           </AnimateHeight>
         </Paper>
       </div>
-
     )
   }
 }

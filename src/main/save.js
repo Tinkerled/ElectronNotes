@@ -1,4 +1,4 @@
-const { ipcRenderer, ipcMain, dialog, BrowserView } = require('electron')
+const {ipcMain, dialog } = require('electron')
 const fs = require('fs');
 
 ipcMain.on('saveNote', (e, content) => {
@@ -18,7 +18,3 @@ ipcMain.on('saveNote', (e, content) => {
         })
     }
 })
-
-// ipcMain.on("fetchNotes", (e, content) => {
-//     console.log(content)
-// })
